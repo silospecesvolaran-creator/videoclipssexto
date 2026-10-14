@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Completar con la palabra correcta: videoclips</title>
+<style>
+:root{--bg:#fffaf7;--card:#ffffff;--ink:#1d1d1d;--mute:#666;--acc:#B5451B;--accbg:#fbf1ec;--ok:#1b7a3d;--okbg:#e4f5ea;--bad:#b3261e;--badbg:#fde8e6;--line:#e3d6cf;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a1512;--card:#241d19;--ink:#f3ebe6;--mute:#b5a69d;--acc:#f08a5d;--accbg:#33261f;--ok:#6fd392;--okbg:#17301f;--bad:#ff8a80;--badbg:#3a1d1a;--line:#43362f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1a1512;--card:#241d19;--ink:#f3ebe6;--mute:#b5a69d;--acc:#f08a5d;--accbg:#33261f;--ok:#6fd392;--okbg:#17301f;--bad:#ff8a80;--badbg:#3a1d1a;--line:#43362f;color-scheme:dark}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;text-transform:uppercase;line-height:1.6}
+main{max-width:720px;margin:0 auto;padding:18px 16px 40px}
+h1{font-size:1.25rem;line-height:1.3;margin:6px 0 4px}
+.sub{color:var(--mute);font-size:.8rem;text-transform:none;margin:0 0 14px}
+h2{font-size:.85rem;letter-spacing:.06em;color:var(--acc);margin:18px 0 8px}
+#bank{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--accbg);border:1.5px solid var(--acc);border-radius:12px;padding:10px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:56px}
+.chip{font:inherit;font-weight:700;font-size:.82rem;text-transform:uppercase;color:var(--acc);background:var(--card);border:1.5px solid var(--acc);border-radius:999px;padding:7px 13px;cursor:pointer}
+.chip.sel{background:var(--acc);color:var(--card)}
+.empty{color:var(--mute);font-size:.8rem;align-self:center}
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;font-size:.95rem}
+.n{color:var(--acc);font-weight:700;margin-right:6px}
+.blank{font:inherit;font-weight:700;text-transform:uppercase;display:inline-block;min-width:130px;min-height:30px;margin:2px 3px;padding:2px 10px;border:0;border-bottom:3px solid var(--acc);background:var(--accbg);color:var(--ink);border-radius:6px 6px 0 0;cursor:pointer;vertical-align:baseline}
+.blank.ok{background:var(--okbg);border-bottom-color:var(--ok);color:var(--ok);cursor:default}
+.blank.bad{background:var(--badbg);border-bottom-color:var(--bad);color:var(--bad)}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:18px}
+.btn{font:inherit;font-weight:700;text-transform:uppercase;border-radius:10px;padding:11px 18px;cursor:pointer;border:1.5px solid var(--acc);background:var(--acc);color:var(--card)}
+.btn.alt{background:transparent;color:var(--acc)}
+#msg{margin-top:14px;padding:12px 14px;border-radius:12px;font-weight:700;display:none}
+#msg.show{display:block;background:var(--accbg);border:1.5px solid var(--acc)}
+#msg.win{background:var(--okbg);border-color:var(--ok);color:var(--ok)}
+</style>
+</head>
+<body>
+<main>
+<h1>■ Completar con la palabra correcta: clasificación de los videoclips</h1>
+<p class="sub">Tocá una palabra del banco y después tocá el espacio donde va. Si te equivocás, tocá la palabra puesta para sacarla.</p>
+<h2>Banco de palabras</h2>
+<div id="bank"></div>
+<h2>Completá las oraciones</h2>
+<div id="qs"></div>
+<div class="bar">
+<button class="btn" id="check">Comprobar</button>
+<button class="btn alt" id="reset">Reiniciar</button>
+</div>
+<div id="msg" role="status"></div>
+</main>
+<script>
+var D=[
+["La división bífida inicial (videorregistro vs. clip conceptual) es pobre porque desconoce los clips conceptuales en los que prevalece el {} sobre el narrar.","MOSTRAR"],
+["La clasificación tipo incluye videorregistros, videoclips narrativos y videoclips {}.","NO NARRATIVOS"],
+["En un videorregistro (live performance) la sinestesia es {}, porque hay una clara correspondencia entre imagen y sonido.","ARMÓNICA"],
+["El intérprete {} es aquel en el que el artista es testigo de eventos protagonizados por un tercero, con un papel casi de espectador.","PARCIAL"],
+["Si en un videoclip narrativo con intérprete absoluto la historia no re-presenta la lírica, hay contrapunto {} entre lírica e imágenes, pero armonía entre sonido e imagen.","NARRATIVO"],
+["Si en un videoclip narrativo con intérprete {} (el artista no aparece) la historia no re-presenta la canción, el videoclip es contrapuntístico.","AUSENTE"],
+["En los videoclips no narrativos predomina el {}, entendido como un flujo de imagen y sonido independiente del texto sonoro.","CONTRAPUNTO"],
+["Según Sibilla, las tres formas de videoclip son formas {}, casi ideales, que rara vez se dan de manera diáfana.","PURAS"],
+["El ritmo de montaje consiste en mover las imágenes siguiendo el {} de la música.","BEAT"],
+["En la armonía rítmica hay concordancia temporal entre montaje y partitura; en el contrapunto rítmico hay tempos diversos que crean una sensación de {}.","SÍNCOPA"]
+];
+var placed=[],locked=[],sel=null,order=[];
+var bank=document.getElementById("bank"),qs=document.getElementById("qs"),msg=document.getElementById("msg");
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function init(){
+placed=D.map(function(){return null});locked=D.map(function(){return false});sel=null;
+order=shuffle(D.map(function(d){return d[1]}));msg.className="";msg.textContent="";
+qs.innerHTML="";
+D.forEach(function(d,i){
+var p=d[0].split("{}"),q=document.createElement("div");q.className="q";
+var n=document.createElement("span");n.className="n";n.textContent="■ "+(i+1)+".";q.appendChild(n);
+q.appendChild(document.createTextNode(p[0]));
+var b=document.createElement("button");b.className="blank";b.id="b"+i;b.type="button";
+b.addEventListener("click",function(){tapBlank(i)});q.appendChild(b);
+q.appendChild(document.createTextNode(p[1]));qs.appendChild(q)});
+render()}
+function render(){
+bank.innerHTML="";
+var left=order.filter(function(w){return placed.indexOf(w)<0});
+if(!left.length){var e=document.createElement("span");e.className="empty";e.textContent="No quedan palabras en el banco";bank.appendChild(e)}
+left.forEach(function(w){
+var c=document.createElement("button");c.type="button";c.className="chip"+(sel===w?" sel":"");c.textContent=w;
+c.addEventListener("click",function(){sel=(sel===w)?null:w;render()});bank.appendChild(c)});
+D.forEach(function(d,i){
+var b=document.getElementById("b"+i);
+b.textContent=placed[i]||"\u00a0";
+b.className="blank"+(locked[i]?" ok":"")}) }
+function tapBlank(i){
+if(locked[i])return;
+msg.className="";
+if(placed[i]){placed[i]=null;document.getElementById("b"+i).classList.remove("bad")}
+else if(sel){placed[i]=sel;sel=null}
+render()}
+document.getElementById("check").addEventListener("click",function(){
+var ok=0,filled=0;
+D.forEach(function(d,i){
+var b=document.getElementById("b"+i);
+if(!placed[i])return;filled++;
+if(placed[i]===d[1]){locked[i]=true}else{b.classList.add("bad")}});
+render();
+D.forEach(function(d,i){if(placed[i]&&placed[i]!==d[1])document.getElementById("b"+i).classList.add("bad")});
+locked.forEach(function(l){if(l)ok++});
+msg.className="show"+(ok===D.length?" win":"");
+if(ok===D.length)msg.textContent="¡Excelente! Completaste las "+D.length+" oraciones correctamente.";
+else if(!filled)msg.textContent="Primero poné algunas palabras en los espacios.";
+else msg.textContent="Tenés "+ok+" de "+D.length+" correctas. Las incorrectas están en rojo: tocalas para sacarlas e intentá de nuevo."});
+document.getElementById("reset").addEventListener("click",init);
+init();
+</script>
+</body>
+</html>
